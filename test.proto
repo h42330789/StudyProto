@@ -1,0 +1,51 @@
+syntax = "proto3";
+option java_package="com.xxx.xxxx.pb";
+option java_outer_classname="TestProto";
+//protoc.exe  -I=. --java_out=../src test.proto
+
+// 客户端详情
+message ClientInfo {
+    string     token      = 1; // 登录时的授权token
+    string     macId      = 2; // 生成的唯一号
+    int32      version         = 3; // 应用版本号
+    int32      language        = 4; // 系统语言
+}
+
+// 公共的返回结果
+message CommonResult {
+    int32 	errCode       = 1; // 错误码
+    string  errMsg        = 2; // 错误内容
+    string  flag          = 3; // 扩展字段
+}
+
+// 性别
+enum Gender {
+    Male  = 0; // 男生
+    Female   = 1; // 女生
+}
+
+// 咨询列表[biz/stus/students]
+message StudentsReq {
+    ClientInfo     clientInfo     = 1; // 对象
+    Gender   gender  = 2;// 枚举
+    repeated string   names  = 3;// 数组
+    int32   grade  = 4;// 数字
+    int32 pageNum  = 5;//
+    int32 pageSize = 6;//
+}
+
+// 学生列表
+message StudentsResp {
+    CommonResult   commonResult   = 1; // 结果信息
+    repeated BaseStudent students = 2;// 列表
+    int32 count = 3; //
+}
+
+message BaseStudent {
+    int64       stuId          = 1; // 学号
+    string      name       = 2; // 名字
+    string      pic         = 3; // 头像
+    int32       age        = 4; // 年龄
+    string      desc  = 5; // 简介
+    Gender      gender  = 6;// 性别
+}
